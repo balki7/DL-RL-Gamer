@@ -44,5 +44,11 @@ public class Move {
 	public List<Point> getSubPoints() {
 		return subPoints;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Move m = (Move) obj;
+		return m.getPlayer().equals(this.getPlayer()) && m.getStartPoint().equals(this.getStartPoint()) && m.getEndPoint().equals(this.getEndPoint()) && m.getSubPoints().equals(this.getSubPoints());
+	}
 
 }

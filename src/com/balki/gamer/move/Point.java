@@ -1,5 +1,6 @@
 package com.balki.gamer.move;
 
+
 /**
  * 
  * @author Balkı
@@ -34,6 +35,12 @@ public class Point {
 
 	public String getId() {
 		return id;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Point p = (Point) obj;
+		return p.getId().equals(this.getId());
 	}
 
 }

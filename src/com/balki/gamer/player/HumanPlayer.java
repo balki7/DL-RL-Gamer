@@ -1,4 +1,7 @@
 package com.balki.gamer.player;
+
+import com.balki.gamer.game.Game;
+
 /**
  * 
  * @author Balki
@@ -7,8 +10,15 @@ package com.balki.gamer.player;
  */
 public class HumanPlayer extends AbstractPlayer{
 
-	public HumanPlayer(String id) {
-		super(id);
+	public HumanPlayer(String id, String gameId) {
+		super(PlayerType.HUMAN, id, gameId);
 	}
+
+	@Override
+	public void setTurn(Game game) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

@@ -1,8 +1,12 @@
 package com.balki.gamer.game;
 
+import java.util.Set;
+
 import com.balki.gamer.board.Board;
-import com.balki.gamer.move.Mover;
+import com.balki.gamer.move.Move;
+import com.balki.gamer.move.Point;
 import com.balki.gamer.player.Player;
+import com.balki.gamer.util.FileManager;
 
 /**
  * 
@@ -11,20 +15,24 @@ import com.balki.gamer.player.Player;
  *
  */
 public class Game {
+	private final String id;
+
 	private final Player player1;
 	private final Player player2;
 
-	private final Player currentPlayer;
+	private Player currentPlayer;
 	private final Board board;
-	private final Mover mover;
-	
-	public Game(Player player1, Player player2) {
+
+	private final String[] player1FinalPoints = new String[] { "f3", "f4", "f5", "g3", "g4", "g5", "h3", "h4", "h5" };
+	private final String[] player2FinalPoints = new String[] { "a3", "a4", "a5", "b3", "b4", "b5", "c3", "c4", "c5" };
+
+	public Game(String id, Player player1, Player player2) {
 		super();
+		this.id = id;
 		this.player1 = player1;
 		this.player2 = player2;
-		this.currentPlayer = player1;
+		this.currentPlayer = null;
 		this.board = new Board();
-		this.mover = new Mover();
 	}
 
 	public Player getPlayer1() {
@@ -43,38 +51,89 @@ public class Game {
 		return board;
 	}
 
-	public Mover getMover() {
-		return mover;
+	public String getId() {
+		return id;
 	}
-	
+
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
 	public void init() {
 		this.getBoard().init();
-		this.getMover().init();
-		
-		this.getBoard().put("a3", player1);
-		this.getBoard().put("a4", player1);
-		this.getBoard().put("a5", player1);
-		this.getBoard().put("b3", player1);
-		this.getBoard().put("b4", player1);
-		this.getBoard().put("b5", player1);
-		this.getBoard().put("c3", player1);
-		this.getBoard().put("c4", player1);
-		this.getBoard().put("c5", player1);
-		
-		this.getBoard().put("f3", player2);
-		this.getBoard().put("f4", player2);
-		this.getBoard().put("f5", player2);
-		this.getBoard().put("g3", player2);
-		this.getBoard().put("g4", player2);
-		this.getBoard().put("g5", player2);
-		this.getBoard().put("h3", player2);
-		this.getBoard().put("h4", player2);
-		this.getBoard().put("h5", player2);
-		
+
+		player1.setFinalPoints(player1FinalPoints);
+		player2.setFinalPoints(player2FinalPoints);
+
+		for (String id : player2FinalPoints) {
+			this.getBoard().put(id, player1);
+		}
+
+		for (String id : player1FinalPoints) {
+			this.getBoard().put(id, player2);
+		}
 	}
 
 	public void start() {
 		this.init();
 		System.out.println(this.getBoard());
+
+		setTurn(this.getPlayer1());
+	}
+
+	private void setTurn(Player player) {
+		setCurrentPlayer(player);
+
+		getCurrentPlayer().setTurn(this);
+	}
+
+	public void move(Move move) {
+		if (move == null) {
+			// GAME OVER
+			System.out.println("No move left");
+		} else {
+			this.getBoard().put(move.getStartPoint().getId(), null);
+			this.getBoard().put(move.getEndPoint().getId(), getCurrentPlayer());
+			getCurrentPlayer().incrementMoveCount();
+
+			FileManager.log(getCurrentPlayer().getLogFile(), getCurrentPlayer().getMoveCount() + " "
+					+ move.getStartPoint().getId() + " " + move.getEndPoint().getId());
+			System.out.println(this.getBoard());
+
+			if (isGameOver()) {
+				System.out.println("Game over, winner : " + getCurrentPlayer().getId());
+				FileManager.log(getCurrentPlayer().getLogFile(), "WIN");
+			} else {
+				switchTurn();
+			}
+		}
+	}
+
+	private boolean isGameOver() {
+		Set<Point> points = getBoard().getPoints(getCurrentPlayer());
+
+		for (Point p : points) {
+			boolean found = false;
+			for (String id : getCurrentPlayer().getFinalPoints()) {
+				if (id.equals(p.getId())) {
+					found = true;
+					break;
+				}
+			}
+
+			if (!found) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private void switchTurn() {
+		if (getCurrentPlayer().equals(getPlayer1())) {
+			setTurn(getPlayer2());
+		} else {
+			setTurn(getPlayer1());
+		}
 	}
 }

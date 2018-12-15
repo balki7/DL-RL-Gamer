@@ -1,5 +1,8 @@
 package com.balki.gamer.board;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.balki.gamer.move.Point;
 import com.balki.gamer.move.Pointer;
 import com.balki.gamer.player.Player;
@@ -42,6 +45,24 @@ public class Board {
 			sb.append("\n");
 		}
 		return sb.toString();
+	}
+
+	public Set<Point> getPoints(Player player) {
+		Set<Point> points = new HashSet<Point>();
+		
+		for (int y = 0; y < 8; y++) {
+			for (int x = 0; x < 8; x++) {
+				if(player.equals(state[y][x])) {
+					points.add(Pointer.getPoint(x, y));
+				}
+			}
+		}
+		
+		return points;
+	}
+
+	public Player getState(Point point) {
+		return state[point.getY()][point.getX()];
 	}
 
 }
