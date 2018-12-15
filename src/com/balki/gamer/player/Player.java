@@ -1,4 +1,4 @@
-package com.balki.gamer.data;
+package com.balki.gamer.player;
 
 /**
  * 
@@ -7,5 +7,7 @@ package com.balki.gamer.data;
  *
  */
 public interface Player {
+
+	String getId();
 
 }
