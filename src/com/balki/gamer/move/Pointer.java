@@ -10,9 +10,9 @@ public class Pointer {
 	private static int[] X_LABELS = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
 	private static String[] Y_LABELS = new String[] { "h", "g", "f", "e", "d", "c", "b", "a" };
 	
-	public static Point getPoint(int x, String y) {
+	public static Point getPoint(String y, int x) {
 		int index = getIndex(x) + getIndex(y) * 8;
-		return new Point(x, y, index);
+		return new Point(getIndex(x), getIndex(y), index, y + x);
 	}
 	
 	private static int getIndex(String y) {
@@ -36,6 +36,14 @@ public class Pointer {
 	public static Point getPoint(int index) {
 		int y = index % 8;
 		int x = index - (y * 8);
-		return new Point(X_LABELS[x], Y_LABELS[y], index);
+		return new Point(x, y, index, Y_LABELS[y] + X_LABELS[x]);
+	}
+
+	public static Point getPoint(String id) {
+		int y = getIndex(id.substring(0,1));
+		int x = getIndex(Integer.parseInt(id.substring(1,2)));
+		
+		int index = x + y * 8;
+		return new Point(x, y, index, id);
 	}
 }

@@ -8,21 +8,23 @@ package com.balki.gamer.move;
  */
 public class Point {
 	private final int x;
-	private final String y;
+	private final int y;
 	private final int index;
+	private final String id;
 
-	public Point(int x, String y, int index) {
+	public Point(int x, int y, int index, String id) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.index = index;
+		this.id = id;
 	}
 
 	public int getX() {
 		return x;
 	}
 
-	public String getY() {
+	public int getY() {
 		return y;
 	}
 
@@ -31,7 +33,7 @@ public class Point {
 	}
 
 	public String getId() {
-		return getY() + getX();
+		return id;
 	}
 
 }

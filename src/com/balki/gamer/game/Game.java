@@ -50,5 +50,31 @@ public class Game {
 	public void init() {
 		this.getBoard().init();
 		this.getMover().init();
+		
+		this.getBoard().put("a3", player1);
+		this.getBoard().put("a4", player1);
+		this.getBoard().put("a5", player1);
+		this.getBoard().put("b3", player1);
+		this.getBoard().put("b4", player1);
+		this.getBoard().put("b5", player1);
+		this.getBoard().put("c3", player1);
+		this.getBoard().put("c4", player1);
+		this.getBoard().put("c5", player1);
+		
+		this.getBoard().put("f3", player2);
+		this.getBoard().put("f4", player2);
+		this.getBoard().put("f5", player2);
+		this.getBoard().put("g3", player2);
+		this.getBoard().put("g4", player2);
+		this.getBoard().put("g5", player2);
+		this.getBoard().put("h3", player2);
+		this.getBoard().put("h4", player2);
+		this.getBoard().put("h5", player2);
+		
+	}
+
+	public void start() {
+		this.init();
+		System.out.println(this.getBoard());
 	}
 }
