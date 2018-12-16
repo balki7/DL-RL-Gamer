@@ -1,7 +1,6 @@
 package com.balki.gamer.move;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -104,7 +103,7 @@ public class Mover {
 		return validMoves;
 	}
 
-	private static boolean isValid(Board board, Player player, Move move) {
+	public static boolean isValid(Board board, Player player, Move move) {
 		if (move.getSubPoints() == null) {
 			// This is a single move
 			int distance = calculateDistance(move.getStartPoint(), move.getEndPoint());
@@ -145,6 +144,45 @@ public class Mover {
 	private static List<Move> getSkips(Board board, Player player) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public static List<Move> getAllMoves(Board board, Player player, Point point) {
+		List<Move> validMoves = new ArrayList<Move>();
+
+		validMoves.addAll(getMoves(board, player, point));
+
+		return validMoves;
+	}
+
+	private static Set<Move> getMoves(Board board, Player player, Point p) {
+		Set<Move> moves = new HashSet<Move>();
+		
+		if (p.getX() + 1 < 8) {
+			moves.add(new Move(player, p, Pointer.getPoint(p.getX() + 1, p.getY())));
+		}
+		if (p.getX() - 1 >= 0) {
+			moves.add(new Move(player, p, Pointer.getPoint(p.getX() - 1, p.getY())));
+		}
+		if (p.getX() + 2 < 8) {
+			moves.add(new Move(player, p, Pointer.getPoint(p.getX() + 2, p.getY())));
+		}
+		if (p.getX() - 2 >= 0) {
+			moves.add(new Move(player, p, Pointer.getPoint(p.getX() - 2, p.getY())));
+		}
+		if (p.getY() + 1 < 8) {
+			moves.add(new Move(player, p, Pointer.getPoint(p.getX(), p.getY() + 1)));
+		}
+		if (p.getY() - 1 >= 0) {
+			moves.add(new Move(player, p, Pointer.getPoint(p.getX(), p.getY() - 1)));
+		}
+		if (p.getY() + 2 < 8) {
+			moves.add(new Move(player, p, Pointer.getPoint(p.getX(), p.getY() + 2)));
+		}
+		if (p.getY() - 2 >= 0) {
+			moves.add(new Move(player, p, Pointer.getPoint(p.getX(), p.getY() - 2)));
+		}
+	
+		return getValidMoves(board, player, moves);
 	}
 
 }

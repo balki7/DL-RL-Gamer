@@ -2,11 +2,9 @@ package com.balki.gamer.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.WindowEvent;
 import java.util.UUID;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.balki.gamer.game.Game;
@@ -30,6 +28,7 @@ public class GameWindow extends JFrame {
 	public static final String DEFAULT_TITLE = "DL Term Project - Balkı";
 	private CheckerBoard board;
 	private OptionPanel opts;
+	private JPanel layout;
 
 	private Game game;
 
@@ -39,15 +38,15 @@ public class GameWindow extends JFrame {
 		super.setLocationByPlatform(true);
 
 		// Setup the components
-		JPanel layout = new JPanel(new BorderLayout());
-		this.board = new CheckerBoard(this);
+		layout = new JPanel(new BorderLayout());
+		layout.setBackground(Color.PINK);
+
 		this.opts = new OptionPanel(this);
 		layout.add(opts, BorderLayout.NORTH);
-		layout.add(board, BorderLayout.CENTER);
 		this.add(layout);
-		
+
 		setBackground(Color.PINK);
-		
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -86,8 +85,11 @@ public class GameWindow extends JFrame {
 		}
 		}
 
-		game = new Game(gameId, player1, player2);
+		game = new Game(this, gameId, player1, player2);
 		game.start();
+
+		this.board = new CheckerBoard(this);
+		layout.add(board, BorderLayout.CENTER);
 	}
 
 	public void pauseGame() {
@@ -95,6 +97,24 @@ public class GameWindow extends JFrame {
 	}
 
 	public void stopGame() {
-		game.stop();
+		game = null;
+		this.board = null;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	public void updateBoard() {
+		this.opts.updateButtons();
+		this.board.updateBoard();
+	}
+
+	public void continueGame() {
+		game.cont();
 	}
 }

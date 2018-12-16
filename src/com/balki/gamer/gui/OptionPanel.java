@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.balki.gamer.game.Game;
 import com.balki.gamer.player.PlayerType;
 
 /**
@@ -32,6 +33,7 @@ public class OptionPanel  extends JPanel{
 	
 	private JButton startBtn;
 	private JButton pauseBtn;
+	private JButton contBtn;
 	private JButton stopBtn;
 	
 	public OptionPanel(GameWindow gameWindow) {
@@ -50,9 +52,11 @@ public class OptionPanel  extends JPanel{
 		
 		this.startBtn = new JButton("Start");
 		this.pauseBtn = new JButton("Pause");
+		this.contBtn = new JButton("Continue");
 		this.stopBtn = new JButton("Stop");
 		
 		this.pauseBtn.setVisible(false);
+		this.contBtn.setVisible(false);
 		this.stopBtn.setVisible(false);
 		
 		this.startBtn.addActionListener(new ActionListener() {		
@@ -60,6 +64,7 @@ public class OptionPanel  extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				startBtn.setVisible(false);
 				pauseBtn.setVisible(true);
+				contBtn.setVisible(false);
 				stopBtn.setVisible(true);
 				gameWindow.startGame(PlayerType.valueOf(PlayerType.class, player1Opts.getSelectedItem().toString()), PlayerType.valueOf(PlayerType.class, player2Opts.getSelectedItem().toString()));
 			}
@@ -68,10 +73,22 @@ public class OptionPanel  extends JPanel{
 		this.pauseBtn.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				startBtn.setVisible(true);
+				startBtn.setVisible(false);
 				pauseBtn.setVisible(false);
+				contBtn.setVisible(true);
 				stopBtn.setVisible(true);
 				gameWindow.pauseGame();
+			}
+		});
+		
+		this.contBtn.addActionListener(new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startBtn.setVisible(false);
+				pauseBtn.setVisible(true);
+				contBtn.setVisible(false);
+				stopBtn.setVisible(true);
+				gameWindow.continueGame();
 			}
 		});
 		
@@ -80,6 +97,7 @@ public class OptionPanel  extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				startBtn.setVisible(true);
 				pauseBtn.setVisible(false);
+				contBtn.setVisible(false);
 				stopBtn.setVisible(false);
 				gameWindow.stopGame();
 			}
@@ -97,6 +115,7 @@ public class OptionPanel  extends JPanel{
 		middle.setBackground(Color.PINK);
 		bottom.add(startBtn);
 		bottom.add(pauseBtn);
+		bottom.add(contBtn);
 		bottom.add(stopBtn);
 		bottom.setBackground(Color.PINK);
 		
@@ -105,5 +124,22 @@ public class OptionPanel  extends JPanel{
 		this.add(bottom);
 		
 		setBackground(Color.PINK);
+	}
+
+	public void updateButtons() {
+		Game game = gameWindow.getGame();
+		
+		if(game.isGameOver()) {
+			startBtn.setVisible(true);
+			pauseBtn.setVisible(false);
+			contBtn.setVisible(false);
+			stopBtn.setVisible(false);
+		}
+		else {
+			startBtn.setVisible(false);
+			pauseBtn.setVisible(true);
+			contBtn.setVisible(false);
+			stopBtn.setVisible(true);
+		}
 	}
 }

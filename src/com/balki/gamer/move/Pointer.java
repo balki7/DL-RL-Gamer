@@ -7,8 +7,8 @@ package com.balki.gamer.move;
  *
  */
 public class Pointer {
-	private static int[] X_LABELS = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-	private static String[] Y_LABELS = new String[] { "h", "g", "f", "e", "d", "c", "b", "a" };
+	public static int[] X_LABELS = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+	public static String[] Y_LABELS = new String[] { "h", "g", "f", "e", "d", "c", "b", "a" };
 	
 	public static Point getPoint(int x, int y) {
 		int index = x + y * 8;

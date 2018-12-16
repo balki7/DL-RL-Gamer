@@ -3,6 +3,7 @@ package com.balki.gamer.game;
 import java.util.Set;
 
 import com.balki.gamer.board.Board;
+import com.balki.gamer.gui.GameWindow;
 import com.balki.gamer.move.Move;
 import com.balki.gamer.move.Point;
 import com.balki.gamer.player.Player;
@@ -15,6 +16,7 @@ import com.balki.gamer.util.FileManager;
  *
  */
 public class Game {
+	private final GameWindow gameWindow;
 	private final String id;
 
 	private final Player player1;
@@ -26,13 +28,21 @@ public class Game {
 	private final String[] player1FinalPoints = new String[] { "f3", "f4", "f5", "g3", "g4", "g5", "h3", "h4", "h5" };
 	private final String[] player2FinalPoints = new String[] { "a3", "a4", "a5", "b3", "b4", "b5", "c3", "c4", "c5" };
 
-	public Game(String id, Player player1, Player player2) {
+	private boolean paused;
+	private boolean gameOver;
+
+	public Game(GameWindow gameWindow, String id, Player player1, Player player2) {
 		super();
+		this.gameWindow = gameWindow;
 		this.id = id;
 		this.player1 = player1;
 		this.player2 = player2;
 		this.currentPlayer = null;
 		this.board = new Board();
+	}
+
+	public GameWindow getGameWindow() {
+		return gameWindow;
 	}
 
 	public Player getPlayer1() {
@@ -59,6 +69,22 @@ public class Game {
 		this.currentPlayer = currentPlayer;
 	}
 
+	public boolean isPaused() {
+		return paused;
+	}
+
+	public void setPaused(boolean paused) {
+		this.paused = paused;
+	}
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
 	public void init() {
 		this.getBoard().init();
 
@@ -76,15 +102,15 @@ public class Game {
 
 	public void start() {
 		this.init();
-		System.out.println(this.getBoard());
-
 		setTurn(this.getPlayer1());
 	}
 
 	private void setTurn(Player player) {
 		setCurrentPlayer(player);
 
-		getCurrentPlayer().setTurn(this);
+		if(!isPaused()) {
+			getCurrentPlayer().setTurn(this);
+		}
 	}
 
 	public void move(Move move) {
@@ -98,18 +124,18 @@ public class Game {
 
 			FileManager.log(getCurrentPlayer().getLogFile(), getCurrentPlayer().getMoveCount() + " "
 					+ move.getStartPoint().getId() + " " + move.getEndPoint().getId());
-			System.out.println(this.getBoard());
 
-			if (isGameOver()) {
-				System.out.println("Game over, winner : " + getCurrentPlayer().getId());
+			if (checkGameOver()) {
 				FileManager.log(getCurrentPlayer().getLogFile(), "WIN");
 			} else {
 				switchTurn();
 			}
 		}
+
+		getGameWindow().updateBoard();
 	}
 
-	private boolean isGameOver() {
+	private boolean checkGameOver() {
 		Set<Point> points = getBoard().getPoints(getCurrentPlayer());
 
 		for (Point p : points) {
@@ -122,10 +148,12 @@ public class Game {
 			}
 
 			if (!found) {
+				setGameOver(false);
 				return false;
 			}
 		}
 
+		setGameOver(true);
 		return true;
 	}
 
@@ -138,12 +166,12 @@ public class Game {
 	}
 
 	public void pause() {
-		// TODO Auto-generated method stub
-		
+		setPaused(true);
 	}
 
-	public void stop() {
-		// TODO Auto-generated method stub
-		
+	public void cont() {
+		setPaused(false);
+		setTurn(this.getCurrentPlayer());
 	}
+
 }
