@@ -10,15 +10,16 @@ import com.balki.gamer.game.Game;
  */
 public class HumanPlayer extends AbstractPlayer{
 
-	public HumanPlayer(String id, String gameId) {
-		super(PlayerType.HUMAN, id, gameId);
+	public HumanPlayer(String id) {
+		super(PlayerType.HUMAN, id);
+	}
+	
+	public HumanPlayer(String id, String[] finalPoints, String logFile, int moveCount) {
+		super(PlayerType.HUMAN, id, finalPoints, logFile, moveCount);
 	}
 
 	@Override
-	public void setTurn(Game game) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setTurn(Game game) {}
 
 
 }

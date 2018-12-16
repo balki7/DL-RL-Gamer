@@ -88,7 +88,7 @@ public class OptionPanel  extends JPanel{
 				pauseBtn.setVisible(true);
 				contBtn.setVisible(false);
 				stopBtn.setVisible(true);
-				gameWindow.continueGame();
+				gameWindow.continueGame(PlayerType.valueOf(PlayerType.class, player1Opts.getSelectedItem().toString()), PlayerType.valueOf(PlayerType.class, player2Opts.getSelectedItem().toString()));
 			}
 		});
 		

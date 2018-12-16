@@ -56,40 +56,45 @@ public class GameWindow extends JFrame {
 		Player player1 = null;
 		switch (player1Type) {
 		case COMPUTER: {
-			player1 = new ComputerPlayer("1", gameId);
+			player1 = new ComputerPlayer("1");
 			break;
 		}
 		case HUMAN: {
-			player1 = new HumanPlayer("1", gameId);
+			player1 = new HumanPlayer("1");
 			break;
 		}
 		case FILE: {
-			player1 = new FilePlayer("1", gameId);
+			player1 = new FilePlayer("1");
 			break;
 		}
 		}
 
 		Player player2 = null;
-		switch (player1Type) {
+		switch (player2Type) {
 		case COMPUTER: {
-			player2 = new ComputerPlayer("2", gameId);
+			player2 = new ComputerPlayer("2");
 			break;
 		}
 		case HUMAN: {
-			player2 = new HumanPlayer("2", gameId);
+			player2 = new HumanPlayer("2");
 			break;
 		}
 		case FILE: {
-			player2 = new FilePlayer("2", gameId);
+			player2 = new FilePlayer("2");
 			break;
 		}
 		}
 
-		game = new Game(this, gameId, player1, player2);
-		game.start();
+		setGame(new Game(this, gameId, player1, player2));
+		getGame().start();
+
+		if (this.board != null) {
+			layout.remove(this.board);
+		}
 
 		this.board = new CheckerBoard(this);
-		layout.add(board, BorderLayout.CENTER);
+		layout.add(this.board, BorderLayout.CENTER);
+		this.repaint();
 	}
 
 	public void pauseGame() {
@@ -98,7 +103,10 @@ public class GameWindow extends JFrame {
 
 	public void stopGame() {
 		game = null;
+
+		layout.remove(this.board);
 		this.board = null;
+		this.repaint();
 	}
 
 	public Game getGame() {
@@ -114,7 +122,59 @@ public class GameWindow extends JFrame {
 		this.board.updateBoard();
 	}
 
-	public void continueGame() {
+	public void continueGame(PlayerType player1Type, PlayerType player2Type) {
+		if (getGame().getPlayer1().getType().equals(player1Type)
+				&& getGame().getPlayer2().getType().equals(player2Type)) {
+			game.cont();
+			return;
+		}
+
+		if (!getGame().getPlayer1().getType().equals(player1Type)) {
+			Player player1 = null;
+			switch (player1Type) {
+			case COMPUTER: {
+				player1 = new ComputerPlayer("1", getGame().getPlayer1().getFinalPoints(),
+						getGame().getPlayer1().getLogFile(), getGame().getPlayer1().getMoveCount());
+				break;
+			}
+			case HUMAN: {
+				player1 = new HumanPlayer("1", getGame().getPlayer1().getFinalPoints(),
+						getGame().getPlayer1().getLogFile(), getGame().getPlayer1().getMoveCount());
+				break;
+			}
+			case FILE: {
+				player1 = new FilePlayer("1", getGame().getPlayer1().getFinalPoints(),
+						getGame().getPlayer1().getLogFile(), getGame().getPlayer1().getMoveCount());
+				break;
+			}
+			}
+
+			getGame().setPlayer1(player1);
+		}
+
+		if (!getGame().getPlayer2().getType().equals(player2Type)) {
+			Player player2 = null;
+			switch (player2Type) {
+			case COMPUTER: {
+				player2 = new ComputerPlayer("2", getGame().getPlayer2().getFinalPoints(),
+						getGame().getPlayer2().getLogFile(), getGame().getPlayer2().getMoveCount());
+				break;
+			}
+			case HUMAN: {
+				player2 = new HumanPlayer("2", getGame().getPlayer2().getFinalPoints(),
+						getGame().getPlayer2().getLogFile(), getGame().getPlayer2().getMoveCount());
+				break;
+			}
+			case FILE: {
+				player2 = new FilePlayer("2", getGame().getPlayer2().getFinalPoints(),
+						getGame().getPlayer2().getLogFile(), getGame().getPlayer2().getMoveCount());
+				break;
+			}
+			}
+
+			getGame().setPlayer2(player2);
+		}
+
 		game.cont();
 	}
 }

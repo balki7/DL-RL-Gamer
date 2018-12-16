@@ -175,11 +175,12 @@ public class CheckerBoard extends JButton {
 
 	private void handleClick(int x, int y) {
 		Game game = gameWindow.getGame();
-		Board board = game.getBoard();
 		
-		if (game.isGameOver() || !PlayerType.HUMAN.equals(game.getCurrentPlayer().getType())) {
+		if (game == null || game.isPaused() || game.isGameOver() || !PlayerType.HUMAN.equals(game.getCurrentPlayer().getType())) {
 			return;
 		}
+		
+		Board board = game.getBoard();
 
 		// Determine what square (if any) was selected
 		final int W = getWidth(), H = getHeight();
@@ -198,7 +199,7 @@ public class CheckerBoard extends JButton {
 			startPoint = new Point(x, y);
 		}
 		else {
-			if(player.equals(game.getCurrentPlayer())) {
+			if(player != null && player.equals(game.getCurrentPlayer())) {
 				startPoint = new Point(x, y);
 				return;
 			}		

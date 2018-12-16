@@ -9,18 +9,22 @@ package com.balki.gamer.player;
 public abstract class AbstractPlayer implements Player {
 	private final String id;
 	private final PlayerType type;
-	private final String gameId;
 	private String[] finalPoints;
 	private final String logFile;
 	private int moveCount;
 
-	public AbstractPlayer(PlayerType type, String id, String gameId) {
+	public AbstractPlayer(PlayerType type, String id) {
+		this(type, id, null, "moves" + id + ".txt", 0);
+	}
+
+	public AbstractPlayer(PlayerType type, String id, String[] finalPoints, String logFile,
+			int moveCount) {
 		super();
-		this.type = type;
 		this.id = id;
-		this.gameId = gameId;
-		this.logFile = gameId + "_moves" + id + ".txt";
-		this.moveCount = 0;
+		this.type = type;
+		this.finalPoints = finalPoints;
+		this.logFile = logFile;
+		this.moveCount = moveCount;
 	}
 
 	@Override
@@ -46,10 +50,6 @@ public abstract class AbstractPlayer implements Player {
 	@Override
 	public void incrementMoveCount() {
 		this.moveCount++;
-	}
-
-	public String getGameId() {
-		return gameId;
 	}
 
 	public void setMoveCount(int moveCount) {

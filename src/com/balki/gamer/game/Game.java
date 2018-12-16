@@ -19,8 +19,8 @@ public class Game {
 	private final GameWindow gameWindow;
 	private final String id;
 
-	private final Player player1;
-	private final Player player2;
+	private Player player1;
+	private Player player2;
 
 	private Player currentPlayer;
 	private final Board board;
@@ -108,7 +108,7 @@ public class Game {
 	private void setTurn(Player player) {
 		setCurrentPlayer(player);
 
-		if(!isPaused()) {
+		if (!isPaused()) {
 			getCurrentPlayer().setTurn(this);
 		}
 	}
@@ -172,6 +172,14 @@ public class Game {
 	public void cont() {
 		setPaused(false);
 		setTurn(this.getCurrentPlayer());
+	}
+
+	public void setPlayer1(Player player1) {
+		this.player1 = player1;
+	}
+
+	public void setPlayer2(Player player2) {
+		this.player2 = player2;
 	}
 
 }

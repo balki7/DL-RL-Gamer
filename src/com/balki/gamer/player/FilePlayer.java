@@ -10,14 +10,15 @@ import com.balki.gamer.game.Game;
  */
 public class FilePlayer extends AbstractPlayer{
 
-	public FilePlayer(String id, String gameId) {
-		super(PlayerType.FILE, id, gameId);
+	public FilePlayer(String id) {
+		super(PlayerType.FILE, id);
+	}
+	
+	public FilePlayer(String id, String[] finalPoints, String logFile, int moveCount) {
+		super(PlayerType.FILE, id, finalPoints, logFile, moveCount);
 	}
 
 	@Override
-	public void setTurn(Game game) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setTurn(Game game) {}
 
 }

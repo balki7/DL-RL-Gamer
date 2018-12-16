@@ -11,8 +11,12 @@ import com.balki.gamer.move.Mover;
  */
 public class ComputerPlayer extends AbstractPlayer {
 
-	public ComputerPlayer(String id, String gameId) {
-		super(PlayerType.COMPUTER, id, gameId);
+	public ComputerPlayer(String id) {
+		super(PlayerType.COMPUTER, id);
+	}
+
+	public ComputerPlayer(String id, String[] finalPoints, String logFile, int moveCount) {
+		super(PlayerType.COMPUTER, id, finalPoints, logFile, moveCount);
 	}
 
 	@Override
