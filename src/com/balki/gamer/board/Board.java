@@ -47,10 +47,8 @@ public class Board {
 		StringBuilder sb = new StringBuilder();
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
-				sb.append((state[y][x] == null) ? "-" : state[y][x].getId());
-				sb.append("\t");
+				sb.append((state[y][x] == null) ? "0" : state[y][x].getId());
 			}
-			sb.append("\n");
 		}
 		return sb.toString();
 	}
@@ -85,6 +83,18 @@ public class Board {
 		
 		b.setState(s);
 		return b;
+	}
+	
+	public String display() {
+		StringBuilder sb = new StringBuilder();
+		for (int y = 0; y < 8; y++) {
+			for (int x = 0; x < 8; x++) {
+				sb.append((state[y][x] == null) ? "-" : state[y][x].getId());
+				sb.append("\t");
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 
 }

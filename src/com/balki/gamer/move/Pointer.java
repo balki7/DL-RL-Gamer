@@ -46,4 +46,11 @@ public class Pointer {
 		int index = x + y * 8;
 		return new Point(x, y, index, id);
 	}
+
+	public static String getRandomPoint() {
+		int x = (int) Math.floor(Math.random() * X_LABELS.length);
+		int y = (int) Math.floor(Math.random() * Y_LABELS.length);
+		
+		return Y_LABELS[y] + X_LABELS[x];
+	}
 }

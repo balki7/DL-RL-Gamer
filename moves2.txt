@@ -52587,3 +52587,27 @@ WIN
 48 d6 c6
 49 c6 c5
 WIN
+1 a8 a6
+2 e4 d4
+3 d4 b4
+4 a6 a5
+5 g4 f4
+6 f4 e4
+7 e4 d4
+8 d4 c4
+9 h8 g8
+10 g8 f8
+11 a1 a2
+12 e6 d6
+13 f8 e8
+14 e8 c8
+15 c8 c7
+16 c7 c6
+17 d6 b6
+18 c6 c5
+19 b6 b5
+20 a3 b3
+21 a2 a3
+22 d2 d3
+23 d3 c3
+WIN

@@ -153,8 +153,6 @@ public class Mover {
 				return false;
 			}
 			
-			// LOOP check
-			
 			Set<Point> startPoints = new HashSet<Point>();
 			Set<Point> endPoints = new HashSet<Point>();
 			for(SubMove s : move.getSubMoves()) {
@@ -281,7 +279,6 @@ public class Mover {
 	}
 
 	private static double calculateScore(Board board, Player player) {
-		System.out.println("calculateScore : " + player.getId());
 		Set<Point> points = board.getPoints(player);
 
 		List<Point> inFinalPoints = new ArrayList<Point>();
@@ -303,7 +300,6 @@ public class Mover {
 			if (owner == null) {
 				emptyFinalPoints.add(point);
 			} else {
-				System.out.println("owner of " + point.getId() + " - " + owner.getId());
 				notEmptyFinalPoints.add(point);
 			}
 		}
@@ -351,7 +347,6 @@ public class Mover {
 
 		if (finalPoint != null && point != null) {
 			finalPointMapper.put(point, finalPoint);
-			System.out.println("Best Match : " + point.getId() + " - " + finalPoint.getId());
 			return;
 		}
 
@@ -376,7 +371,6 @@ public class Mover {
 
 		if (finalPoint != null && point != null) {
 			finalPointMapper.put(point, finalPoint);
-			System.out.println("Best Match : " + point.getId() + " - " + finalPoint.getId());
 			return;
 		}
 
@@ -401,7 +395,6 @@ public class Mover {
 
 		if (finalPoint != null && point != null) {
 			finalPointMapper.put(point, finalPoint);
-			System.out.println("Best Match : " + point.getId() + " - " + finalPoint.getId());
 			return;
 		}
 
@@ -426,7 +419,6 @@ public class Mover {
 
 		if (finalPoint != null && point != null) {
 			finalPointMapper.put(point, finalPoint);
-			System.out.println("Best Match : " + point.getId() + " - " + finalPoint.getId());
 			return;
 		}
 		return;

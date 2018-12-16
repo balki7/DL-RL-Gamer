@@ -7,6 +7,7 @@ import com.balki.gamer.gui.GameWindow;
 import com.balki.gamer.move.Move;
 import com.balki.gamer.move.Mover;
 import com.balki.gamer.move.Point;
+import com.balki.gamer.move.Pointer;
 import com.balki.gamer.player.Player;
 import com.balki.gamer.util.FileManager;
 
@@ -86,27 +87,47 @@ public class Game {
 		this.gameOver = gameOver;
 	}
 
-	public void init() {
+	public void init(boolean random) {
 		this.getBoard().init();
 
 		player1.setFinalPoints(player1FinalPoints);
 		player2.setFinalPoints(player2FinalPoints);
 
-		for (String id : player2FinalPoints) {
-			this.getBoard().put(id, player1);
-		}
+		if (!random) {
+			for (String id : player2FinalPoints) {
+				this.getBoard().put(id, player1);
+			}
 
-		for (String id : player1FinalPoints) {
-			this.getBoard().put(id, player2);
+			for (String id : player1FinalPoints) {
+				this.getBoard().put(id, player2);
+			}
+		} else {
+			int count = 0;
+			while(count < 9) {
+				Point randomPoint = Pointer.getPoint(Pointer.getRandomPoint());
+				if(getBoard().getState(randomPoint) == null) {
+					this.getBoard().put(randomPoint.getId(), player1);
+					count++;
+				}
+			}
+			
+			count = 0;
+			while(count < 9) {
+				Point randomPoint = Pointer.getPoint(Pointer.getRandomPoint());
+				if(getBoard().getState(randomPoint) == null) {
+					this.getBoard().put(randomPoint.getId(), player2);
+					count++;
+				}
+			}
 		}
 	}
 
 	public void start() {
-		this.init();
+		this.init(false);
 		setTurn(this.getPlayer1());
 	}
 
-	private void setTurn(Player player) {
+	public void setTurn(Player player) {
 		setCurrentPlayer(player);
 
 		if (!isPaused()) {
