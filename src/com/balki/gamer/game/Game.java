@@ -136,4 +136,14 @@ public class Game {
 			setTurn(getPlayer1());
 		}
 	}
+
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
 }
