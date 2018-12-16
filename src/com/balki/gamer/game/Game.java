@@ -119,11 +119,12 @@ public class Game {
 			// GAME OVER
 			System.out.println("No move left");
 		} else {
-			if(!Mover.isValid(board, this.getCurrentPlayer(), move)) {
-				System.out.println("Invalid move : " + this.getCurrentPlayer().getId() + " : " + move.getStartPoint().getId() + " -> " + move.getEndPoint().getId());
+			if (!Mover.isValid(board, this.getCurrentPlayer(), move)) {
+				System.out.println("Invalid move : " + this.getCurrentPlayer().getId() + " : "
+						+ move.getStartPoint().getId() + " -> " + move.getEndPoint().getId());
 				return;
 			}
-			
+
 			this.getBoard().put(move.getStartPoint().getId(), null);
 			this.getBoard().put(move.getEndPoint().getId(), getCurrentPlayer());
 			getCurrentPlayer().incrementMoveCount();
@@ -187,5 +188,4 @@ public class Game {
 	public void setPlayer2(Player player2) {
 		this.player2 = player2;
 	}
-
 }

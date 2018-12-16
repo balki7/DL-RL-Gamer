@@ -7,5 +7,5 @@ package com.balki.gamer.player;
  *
  */
 public enum PlayerType {
-	HUMAN, COMPUTER, FILE;
+	COMPUTER, HUMAN, FILE;
 }

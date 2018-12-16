@@ -23,7 +23,7 @@ public class ComputerPlayer extends AbstractPlayer {
 	public void setTurn(Game game) {
 		class MoverThread extends Thread {
 			public void run() {
-				game.move(Mover.getMove(game.getBoard(), game.getCurrentPlayer()));
+				game.move(Mover.getMove(game, game.getCurrentPlayer()));
 			}
 		}
 		

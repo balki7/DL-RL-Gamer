@@ -33,7 +33,15 @@ public class Board {
 		Point p = Pointer.getPoint(id);
 		state[p.getY()][p.getX()] = player;
 	}
-	
+
+	public Player[][] getState() {
+		return state;
+	}
+
+	public void setState(Player[][] state) {
+		this.state = state;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -49,20 +57,34 @@ public class Board {
 
 	public Set<Point> getPoints(Player player) {
 		Set<Point> points = new HashSet<Point>();
-		
+
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
-				if(player.equals(state[y][x])) {
+				if (player.equals(state[y][x])) {
 					points.add(Pointer.getPoint(x, y));
 				}
 			}
 		}
-		
+
 		return points;
 	}
 
 	public Player getState(Point point) {
 		return state[point.getY()][point.getX()];
+	}
+
+	public Board clone() {
+		Board b = new Board();
+		
+		Player[][] s = new Player[8][8];
+		for (int y = 0; y < 8; y++) {
+			for (int x = 0; x < 8; x++) {
+				s[y][x] = state[y][x];
+			}
+		}
+		
+		b.setState(s);
+		return b;
 	}
 
 }

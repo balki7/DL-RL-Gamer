@@ -5,7 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.balki.gamer.game.Game;
-import com.balki.gamer.move.Move;
 import com.balki.gamer.move.Mover;
 import com.balki.gamer.move.Pointer;
 import com.balki.gamer.util.FileManager;
@@ -46,7 +45,7 @@ public class FilePlayer extends AbstractPlayer {
 			            String startPointId = matcher.group(2);
 			            String endPointId = matcher.group(3);
 			            
-						game.move(new Move(game.getCurrentPlayer(), Pointer.getPoint(startPointId), Pointer.getPoint(endPointId)));
+			            game.move(Mover.generateMove(game.getBoard(), game.getCurrentPlayer(), Pointer.getPoint(startPointId), Pointer.getPoint(endPointId)));
 			        }
 				} catch (IOException e) {
 					e.printStackTrace();

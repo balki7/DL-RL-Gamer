@@ -204,7 +204,7 @@ public class CheckerBoard extends JButton {
 				return;
 			}		
 			
-			Move move = new Move(game.getCurrentPlayer(), Pointer.getPoint(startPoint.x, startPoint.y), Pointer.getPoint(x, y));
+			Move move = Mover.generateMove(game.getBoard(), game.getCurrentPlayer(), Pointer.getPoint(startPoint.x, startPoint.y), Pointer.getPoint(x, y));
 			if(Mover.isValid(board, game.getCurrentPlayer(), move)) {
 				game.move(move);
 			}
