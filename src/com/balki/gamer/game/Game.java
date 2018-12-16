@@ -5,6 +5,7 @@ import java.util.Set;
 import com.balki.gamer.board.Board;
 import com.balki.gamer.gui.GameWindow;
 import com.balki.gamer.move.Move;
+import com.balki.gamer.move.Mover;
 import com.balki.gamer.move.Point;
 import com.balki.gamer.player.Player;
 import com.balki.gamer.util.FileManager;
@@ -118,6 +119,11 @@ public class Game {
 			// GAME OVER
 			System.out.println("No move left");
 		} else {
+			if(!Mover.isValid(board, this.getCurrentPlayer(), move)) {
+				System.out.println("Invalid move : " + this.getCurrentPlayer().getId() + " : " + move.getStartPoint().getId() + " -> " + move.getEndPoint().getId());
+				return;
+			}
+			
 			this.getBoard().put(move.getStartPoint().getId(), null);
 			this.getBoard().put(move.getEndPoint().getId(), getCurrentPlayer());
 			getCurrentPlayer().incrementMoveCount();
