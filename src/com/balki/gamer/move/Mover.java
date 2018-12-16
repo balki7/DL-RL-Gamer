@@ -1,9 +1,10 @@
 package com.balki.gamer.move;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import com.balki.gamer.board.Board;
@@ -17,27 +18,40 @@ import com.balki.gamer.player.Player;
  */
 public class Mover {
 	public static Move getMove(Board board, Player player) {
-		Set<Move> validMoves = getAllMoves(board, player);
+		List<Move> validMoves = getAllMoves(board, player);
 
-		int size = validMoves.size();
-		if (size > 0) {
-			int item = new Random().nextInt(size);
-			int i = 0;
-			for (Move obj : validMoves) {
-				if (i == item)
-					return obj;
-				i++;
+		if (validMoves.isEmpty()) {
+			return null;
+		}
+
+		List<Move> moves = new ArrayList<Move>();
+		for (Move m : validMoves) {
+			if (isFinalPoint(player, m.getStartPoint())) {
+				continue;
+			}
+
+			moves.add(m);
+		}
+
+		return moves.get(0);
+	}
+
+	private static boolean isFinalPoint(Player player, Point startPoint) {
+		String[] finalPoints = player.getFinalPoints();
+
+		for (String finalPoint : finalPoints) {
+			if (finalPoint.equals(startPoint.getId())) {
+				return true;
 			}
 		}
 
-		return null;
+		return false;
 	}
 
-	public static Set<Move> getAllMoves(Board board, Player player) {
-		Set<Move> validMoves = new HashSet<Move>();
+	public static List<Move> getAllMoves(Board board, Player player) {
+		List<Move> validMoves = new ArrayList<Move>();
 
 		validMoves.addAll(getMoves(board, player));
-		// TODO validMoves.addAll(getSkips(board, player));
 
 		return validMoves;
 	}
@@ -93,20 +107,20 @@ public class Mover {
 	private static boolean isValid(Board board, Player player, Move move) {
 		if (move.getSubPoints() == null) {
 			// This is a single move
-			double distance = calculateDistance(move);
-			if (Math.abs(distance) == 1) {
+			int distance = calculateDistance(move.getStartPoint(), move.getEndPoint());
+			if (distance == 1) {
 				// not jump
 				if (board.getState(move.getEndPoint()) != null) {
 					return false;
 				}
 				return true;
-			} else if (Math.abs(distance) == 2) {
+			} else if (distance == 2) {
 				// jump
 				if (board.getState(move.getEndPoint()) != null) {
 					return false;
 				}
 
-				Point middle = getMiddle(move, distance);
+				Point middle = getMiddle(move);
 				if (board.getState(middle) != null) {
 					return true;
 				}
@@ -120,23 +134,12 @@ public class Mover {
 		}
 	}
 
-	private static Point getMiddle(Move move, double distance) {
-		if (move.getStartPoint().getX() == move.getEndPoint().getX()) {
-			// change y
-			return Pointer.getPoint(move.getStartPoint().getX(), move.getStartPoint().getY() + (int) (distance / 2));
-		}
-
-		if (move.getStartPoint().getY() == move.getEndPoint().getY()) {
-			// change x
-			return Pointer.getPoint(move.getStartPoint().getX() + (int) (distance / 2), move.getStartPoint().getY());
-		}
-
-		return null;
+	private static Point getMiddle(Move move) {
+		return Pointer.getPoint((int)((move.getStartPoint().getX() + move.getEndPoint().getX()) / 2), (int) ((move.getStartPoint().getY() + move.getEndPoint().getY()) / 2));
 	}
 
-	private static double calculateDistance(Move move) {
-		return (move.getEndPoint().getY() - move.getStartPoint().getY())
-				+ (move.getEndPoint().getX() - move.getStartPoint().getX());
+	private static int calculateDistance(Point p1, Point p2) {
+		return Math.abs(p2.getY() - p1.getY()) + Math.abs(p2.getX() - p1.getX());
 	}
 
 	private static List<Move> getSkips(Board board, Player player) {
