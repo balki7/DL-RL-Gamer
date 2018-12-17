@@ -6,6 +6,12 @@ import com.balki.gamer.move.Mover;
 import com.balki.gamer.player.ComputerPlayer;
 import com.balki.gamer.util.FileManager;
 
+/**
+ * 
+ * @author Balki
+ * @since 17/12/2018
+ *
+ */
 public class Test {
 
 	public static void main(String[] args) {
