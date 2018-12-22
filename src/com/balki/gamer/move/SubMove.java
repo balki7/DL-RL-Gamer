@@ -1,9 +1,5 @@
 package com.balki.gamer.move;
 
-import java.util.List;
-
-import com.balki.gamer.player.Player;
-
 /**
  * 
  * @author Balkı

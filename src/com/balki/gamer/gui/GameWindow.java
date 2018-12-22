@@ -13,6 +13,7 @@ import com.balki.gamer.player.FilePlayer;
 import com.balki.gamer.player.HumanPlayer;
 import com.balki.gamer.player.Player;
 import com.balki.gamer.player.PlayerType;
+import com.balki.gamer.player.RLPlayer;
 
 /**
  * 
@@ -55,6 +56,10 @@ public class GameWindow extends JFrame {
 
 		Player player1 = null;
 		switch (player1Type) {
+		case RL: {
+			player1 = new RLPlayer("1");
+			break;
+		}
 		case COMPUTER: {
 			player1 = new ComputerPlayer("1");
 			break;
@@ -71,6 +76,10 @@ public class GameWindow extends JFrame {
 
 		Player player2 = null;
 		switch (player2Type) {
+		case RL: {
+			player2 = new RLPlayer("2");
+			break;
+		}
 		case COMPUTER: {
 			player2 = new ComputerPlayer("2");
 			break;
@@ -132,6 +141,11 @@ public class GameWindow extends JFrame {
 		if (!getGame().getPlayer1().getType().equals(player1Type)) {
 			Player player1 = null;
 			switch (player1Type) {
+			case RL: {
+				player1 = new RLPlayer("1", getGame().getPlayer1().getFinalPoints(),
+						getGame().getPlayer1().getLogFile(), getGame().getPlayer1().getMoveCount());
+				break;
+			}
 			case COMPUTER: {
 				player1 = new ComputerPlayer("1", getGame().getPlayer1().getFinalPoints(),
 						getGame().getPlayer1().getLogFile(), getGame().getPlayer1().getMoveCount());
@@ -155,6 +169,11 @@ public class GameWindow extends JFrame {
 		if (!getGame().getPlayer2().getType().equals(player2Type)) {
 			Player player2 = null;
 			switch (player2Type) {
+			case RL: {
+				player2 = new RLPlayer("2", getGame().getPlayer2().getFinalPoints(),
+						getGame().getPlayer2().getLogFile(), getGame().getPlayer2().getMoveCount());
+				break;
+			}
 			case COMPUTER: {
 				player2 = new ComputerPlayer("2", getGame().getPlayer2().getFinalPoints(),
 						getGame().getPlayer2().getLogFile(), getGame().getPlayer2().getMoveCount());

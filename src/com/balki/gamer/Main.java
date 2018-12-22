@@ -1,6 +1,7 @@
 package com.balki.gamer;
 
 import com.balki.gamer.gui.GameWindow;
+
 /**
  * 
  * @author Balki
@@ -9,9 +10,9 @@ import com.balki.gamer.gui.GameWindow;
  */
 public class Main {
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		GameWindow gameWindow = new GameWindow();
-		gameWindow.show();
+		gameWindow.setVisible(true);
 	}
 
 }

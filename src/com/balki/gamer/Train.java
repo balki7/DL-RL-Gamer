@@ -18,7 +18,6 @@ import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.buffer.DataBuffer;
 import org.nd4j.linalg.api.ndarray.INDArray;
-import org.nd4j.linalg.cpu.nativecpu.NDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.dataset.SplitTestAndTrain;
 import org.nd4j.linalg.factory.Nd4j;
@@ -56,18 +55,18 @@ public class Train {
 				.updater(Updater.ADAGRAD).list()
 				.layer(0,
 						new ConvolutionLayer.Builder(3, 3).nIn(featurePlanes).stride(1, 1).nOut(50)
-						.activation(Activation.RELU).build())
+								.activation(Activation.RELU).build())
 				.layer(1,
 						new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX).kernelSize(2, 2).stride(1, 1)
-						.build())
+								.build())
 				.layer(2, new ConvolutionLayer.Builder(3, 3).stride(1, 1).nOut(20).activation(Activation.RELU).build())
 				.layer(3,
 						new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX).kernelSize(2, 2).stride(1, 1)
-						.build())
+								.build())
 				.layer(4, new DenseLayer.Builder().activation(Activation.RELU).nOut(500).build())
 				.layer(5,
 						new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD).nOut(boardSize)
-						.activation(Activation.SOFTMAX).build())
+								.activation(Activation.SOFTMAX).build())
 				.setInputType(InputType.convolutional(size, size, featurePlanes)).backprop(true).pretrain(false)
 				.build();
 
